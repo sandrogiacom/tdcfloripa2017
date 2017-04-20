@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:fragment>
+
+		<h:form id="cadastro">
+		
+			<p:panelGrid columns="2" layout="grid">      
+				<h:inputHidden value="#{titulosController.titulo.codigo}" />
+				
+				<h:outputLabel value="Cliente:" />
+				<p:selectOneMenu value="#{titulosController.cliente}">
+					<f:selectItem itemLabel="" itemValue=""/>
+					<f:selectItems var="cli" value="#{titulosController.clientes}" 
+						itemDescription="#{cli.nome}" itemLabel="#{cli.nome}" itemValue="#{cli.nome}" />
+				</p:selectOneMenu>
+				
+				<h:outputLabel value="Descrição:" />
+				<p:inputText value="#{titulosController.titulo.descricao}"></p:inputText>
+				
+				
+				<p:commandButton class="btn btn-primary" icon="fa fa-save" value="Salvar"
+								action="#{titulosController.salvar}"></p:commandButton>
+				<p:commandButton class="btn btn-primary" icon="fa fa-cancel" value="Cancelar"
+								action="#{titulosController.salvar}"></p:commandButton>
+								
+				
+			</p:panelGrid>
+		
+				<div class="panel-body">
+
+				
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="dataVencimento" class="col-sm-2 control-label">Data -->
+<!-- 							de vencimento</label> -->
+<!-- 						<div class="col-sm-2"> -->
+<!-- 							<p:calendar value="#{titulosController.titulo.dataVencimento}"></p:calendar> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="valor" class="col-sm-2 control-label">Valor</label> -->
+<!-- 						<div class="col-sm-2"> -->
+<!-- 							<p:inputNumber value="#{titulosController.titulo.valor}"></p:inputNumber> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="status" class="col-sm-2 control-label">Status</label> -->
+<!-- 						<div class="col-sm-2"> -->
+<!-- 							<p:selectOneMenu value="#{titulosController.titulo.status}" -->
+<!-- 								var="st"> -->
+<!-- 								<f:selectItems value="#{titulosController.statusList}" -->
+<!-- 									itemDescription="#{st.descricao}" itemValue="st" /> -->
+<!-- 							</p:selectOneMenu> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<p:commandButton class="btn btn-primary" icon="fa fa-save" value="Salvar"
+								action="#{titulosController.salvar}"></p:commandButton>
+						</div>
+					</div>
+				
+				</div>
+		</h:form>
+</ui:fragment>
+</ui:composition>

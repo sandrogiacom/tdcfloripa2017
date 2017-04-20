@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/templates/layout.xhtml">
+
+	<ui:define name="content">
+
+		<p:dialog header="Editar" widgetVar="dlgedit" height="400px"
+			width="600px" id="editModal">
+			<h:form id="modalForm">
+				<p:panelGrid columns="1" style="width:100%" layout="grid">
+
+					<h:outputLabel value="Cliente:" style="width:100px" />
+					<h:inputHidden value="#{titulosController.titulo.codigo}" />
+
+					<p:selectOneMenu value="#{titulosController.cliente.codigo}">
+						<f:selectItem itemLabel="" itemValue="" />
+						<f:selectItems var="cli" value="#{titulosController.clientes}"
+							itemDescription="#{cli.nome}" itemLabel="#{cli.nome}"
+							itemValue="#{cli.codigo}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="Descrição:" />
+					<p:inputText value="#{titulosController.titulo.descricao}"></p:inputText>
+
+					<h:outputLabel value="Data Vencimento:" />
+					<p:calendar value="#{titulosController.titulo.dataVencimento}"></p:calendar>
+
+					<h:outputLabel value="Valor:" />
+					<p:inputText value="#{titulosController.titulo.valor}"></p:inputText>
+
+					<h:outputLabel value="Status:" />
+					<p:selectOneMenu value="#{titulosController.titulo.status}">
+						<f:selectItem itemLabel="" itemValue="" />
+						<f:selectItems var="st" value="#{titulosController.statusTitulo}"
+							itemValue="#{st.name()}" />
+					</p:selectOneMenu>
+
+					<div align="left">
+
+						<p:commandButton icon="fa fa-save" value="Salvar" update="mainForm"
+							oncomplete="PF('dlgedit').hide();" id="saveBtn"
+							actionListener="#{titulosController.salvar}"></p:commandButton>
+						<p:commandButton icon="fa fa-close" value="Cancelar"
+							onclick="PF('dlgedit').hide();"></p:commandButton>
+					</div>
+					<p:blockUI block="mainForm" trigger="saveBtn" >
+						LOADING<br />
+					</p:blockUI>
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+
+		<h:form id="mainForm">
+
+			<p:growl id="msgs" showDetail="true" />
+
+			<div>
+				<p:inputText value="#{titulosController.filtro.descricao}"
+					placeholder="Qual título você está procurando?"
+					autofocus="autofocus"></p:inputText>
+				<span>
+					 <p:commandButton update="data" id="findBtn"
+						action="#{titulosController.findTitulos}" icon="fa fa-search">
+					</p:commandButton> 
+					<p:blockUI block="mainForm" trigger="findBtn" >
+						LOADING<br />
+					</p:blockUI>
+
+					<p:spacer width="10px"></p:spacer>
+					<p:commandButton action="#{titulosController.novo}" update="modalForm"
+						value="Novo" icon="fa fa-file" oncomplete="PF('dlgedit').show();">
+					</p:commandButton>
+					
+					<p:spacer width="10px"></p:spacer>
+					<p:commandButton action="#{userLoginView.logout}" value="Sair" icon="fa fa-sign-out"></p:commandButton>
+					
+				</span>
+			</div>
+
+			<div style="height: 100%">
+
+				<p:dataTable var="titulo" value="#{titulosController.titulos}"
+					id="data" paginator="true" rows="10">
+					<p:column headerText="Id">
+						<h:outputText value="#{titulo.codigo}" />
+					</p:column>
+
+					<p:column headerText="Cliente">
+						<h:outputText value="#{titulo.cliente.nome}" />
+					</p:column>
+
+					<p:column headerText="Descricao">
+						<h:outputText value="#{titulo.descricao}" />
+					</p:column>
+
+					<p:column headerText="Data de vencimento">
+						<h:outputText value="#{titulo.dataVencimento}" />
+					</p:column>
+
+					<p:column headerText="Valor">
+						<h:outputText value="#{titulo.valor}" />
+					</p:column>
+
+					<p:column headerText="Status">
+						<h:outputText id="status1" value="#{titulo.status}"
+							style="color:red" rendered="#{titulo.status == 'PENDENTE'}" />
+						<h:outputText id="status2" value="#{titulo.status}"
+							style="color:blue" rendered="#{titulo.status == 'RECEBIDO'}" />
+					</p:column>
+
+					<p:column headerText="Acoes" style="align: center">
+						<div align="center">
+							<p:tooltip for="receber" value="Receber" position="top" />
+							<p:tooltip for="editar" value="Editar" position="top" />
+							<p:tooltip for="excluir" value="Excluir" position="top" />
+							<p:commandButton id="receber" update="mainForm"
+								rendered="#{titulo.status == 'PENDENTE'}"
+								action="#{titulosController.receber}" icon="fa fa-check-circle">
+								<f:setPropertyActionListener value="#{titulo}"
+									target="#{titulosController.titulo}"></f:setPropertyActionListener>
+							</p:commandButton>
+							<p:spacer width="5px" />
+							<p:commandButton id="editar" update="modalForm"
+								oncomplete="PF('dlgedit').show();" icon="fa fa-edit">
+								<f:setPropertyActionListener value="#{titulo}"
+									target="#{titulosController.titulo}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener value="#{titulo.cliente}"
+									target="#{titulosController.cliente}"></f:setPropertyActionListener>	
+							</p:commandButton>
+							<p:spacer width="5px" />
+							<p:commandButton id="excluir" update="mainForm"
+								action="#{titulosController.excluir}" icon="fa fa-remove">
+								<f:setPropertyActionListener value="#{titulo}"
+									target="#{titulosController.titulo}"></f:setPropertyActionListener>
+							</p:commandButton>
+						</div>
+					</p:column>
+
+				</p:dataTable>
+
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

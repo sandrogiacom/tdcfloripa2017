@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#*" PATH="/*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#*:0" NAME="item" PATH="/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="home::#pages#pesquisatitulos.xhtml"
+    NAME="output" PATH="/pages/pesquisatitulos.xhtml"
+    TARGET="rules:#pages#pesquisatitulos.xhtml" TITLE="home" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cadastrotitulo::#pages#cadastrotitulo.xhtml"
+    NAME="output1" PATH="/pages/cadastrotitulo.xhtml"
+    TARGET="rules:#pages#cadastrotitulo.xhtml" TITLE="cadastrotitulo" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#pesquisatitulos.xhtml"
+  PATH="/pages/pesquisatitulos.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#cadastrotitulo.xhtml"
+  PATH="/pages/cadastrotitulo.xhtml" SHAPE="256,177,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>
